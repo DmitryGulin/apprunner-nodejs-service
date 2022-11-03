@@ -1,20 +1,24 @@
 name: Deploy to App Runner - Source # Name of the workflow
 on:
   push:
-    branches: [ main ] # Trigger workflow on git push to main branch
+    branches: [main] # Trigger workflow on git push to main branch
   workflow_dispatch: # Allow manual invocation of the workflow
 
-jobs:  
+jobs:
   deploy:
     runs-on: ubuntu-latest
-    
-    steps:            
+    # These permissions are needed to interact with GitHub's OIDC Token endpoint.
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1 # Configure with AWS Credentials
         with:
           role-to-assume: ${{ secrets.AWS_ASSUME_ROLE_ARN }}
           aws-region: ${{ secrets.AWS_REGION }}
-          
+
       - name: Deploy to App Runner
         id: apprunner-github-action-sourcecode-demo
         uses: DmitryGulin/amazon-app-runner-deploy@main # Deploy app runner service
@@ -28,9 +32,9 @@ jobs:
           start-command: npm start
           port: 18000
           region: ${{ secrets.AWS_REGION }}
-          cpu : 1
-          memory : 2
+          cpu: 1
+          memory: 2
           wait-for-service-stability: true
-      
+
       - name: App Runner output
         run: echo "App runner output ${{ steps.deploy-apprunner.outputs.service-id }}"
