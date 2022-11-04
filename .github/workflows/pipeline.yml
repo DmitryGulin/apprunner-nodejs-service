@@ -33,12 +33,12 @@ jobs:
           runtime: NODEJS_16
           build-command: npm ci && npm run build
           start-command: npm start
-          port: $SERVER_PORT
+          port: ${{ env.SERVER_PORT }}
           region: ${{ secrets.AWS_REGION }}
           cpu: 1
           memory: 2
           wait-for-service-stability: true
-          promote_env_vars: |
+          copy-env-vars: |
             SERVER_PORT
             OTHER_VARIABLE
 
