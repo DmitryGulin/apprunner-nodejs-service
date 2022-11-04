@@ -22,6 +22,9 @@ jobs:
       - name: Deploy to App Runner
         id: apprunner-github-action-sourcecode-demo
         uses: DmitryGulin/amazon-app-runner-deploy@main # Deploy app runner service
+        env:
+          SERVER_PORT: 8080
+          OTHER_VARIABLE: some string here
         with:
           service: apprunner-github-action-sourcecode-demo
           source-connection-arn: ${{ secrets.AWS_CONNECTION_SOURCE_ARN }}
@@ -30,11 +33,14 @@ jobs:
           runtime: NODEJS_16
           build-command: npm ci && npm run build
           start-command: npm start
-          port: 8080
+          port: $SERVER_PORT
           region: ${{ secrets.AWS_REGION }}
           cpu: 1
           memory: 2
           wait-for-service-stability: true
+          promote_env_vars: |
+            SERVER_PORT
+            OTHER_VARIABLE
 
       - name: App Runner output
         run: echo "App runner output ${{ steps.deploy-apprunner.outputs.service-id }}"
