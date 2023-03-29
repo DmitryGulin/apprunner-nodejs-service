@@ -1,6 +1,6 @@
 {
     "name": "simple-nodejs-service",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "A simple NodeJS service for POC and testing purposes",
     "private": true,
     "license": "MIT",
