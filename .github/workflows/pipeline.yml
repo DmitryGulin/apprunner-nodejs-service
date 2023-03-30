@@ -19,26 +19,26 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ASSUME_ROLE_ARN }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-#       - name: Deploy to App Runner
-#         id: apprunner-github-action-sourcecode-demo
-#         uses: DmitryGulin/amazon-app-runner-deploy@main # Deploy app runner service
-#         env:
-#           SERVER_PORT: 80
-#         with:
-#           service: apprunner-github-action-sourcecode-demo
-#           source-connection-arn: ${{ secrets.AWS_CONNECTION_SOURCE_ARN }}
-#           repo: https://github.com/${{ github.repository }}
-#           branch: ${{ github.ref }}
-#           runtime: NODEJS_16
-#           build-command: npm ci && npm run build
-#           start-command: npm start
-#           port: ${{ env.SERVER_PORT }}
-#           region: ${{ secrets.AWS_REGION }}
-#           cpu: 1
-#           memory: 2
-#           wait-for-service-stability: true
-#           copy-env-vars: |
-#             SERVER_PORT
+      - name: Deploy to App Runner
+        id: apprunner-github-action-sourcecode-demo
+        uses: DmitryGulin/amazon-app-runner-deploy@main # Deploy app runner service
+        env:
+          SERVER_PORT: 80
+        with:
+          service: apprunner-github-action-sourcecode-demo
+          source-connection-arn: ${{ secrets.AWS_CONNECTION_SOURCE_ARN }}
+          repo: https://github.com/${{ github.repository }}
+          branch: ${{ github.ref }}
+          runtime: NODEJS_16
+          build-command: npm ci && npm run build
+          start-command: npm start
+          port: ${{ env.SERVER_PORT }}
+          region: ${{ secrets.AWS_REGION }}
+          cpu: 1
+          memory: 2
+          wait-for-service-stability: true
+          copy-env-vars: |
+            SERVER_PORT
 
-#       - name: App Runner output
-#         run: echo "App runner output ${{ steps.deploy-apprunner.outputs.service-id }}"
+      - name: App Runner output
+        run: echo "App runner output ${{ steps.deploy-apprunner.outputs.service-id }}"
