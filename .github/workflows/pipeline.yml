@@ -24,6 +24,7 @@ jobs:
         uses: DmitryGulin/amazon-app-runner-deploy@main # Deploy app runner service
         env:
           SERVER_PORT: 80
+          SECRET_ENV: ${{ secrets.AWS_SECRET_ARN }}
         with:
           service: apprunner-github-action-sourcecode-demo
           source-connection-arn: ${{ secrets.AWS_CONNECTION_SOURCE_ARN }}
@@ -39,6 +40,8 @@ jobs:
           wait-for-service-stability: true
           copy-env-vars: |
             SERVER_PORT
+          copy-secret-env-vars: |
+            SECRET_ENV
 
       - name: App Runner output
         run: echo "App runner output ${{ steps.deploy-apprunner.outputs.service-id }}"
