@@ -38,7 +38,7 @@ jobs:
           cpu: 1
           memory: 2
           wait-for-service-stability: true
-          instance-role-arn: ${{ AWS_INSTANCE_ROLE_ARN }}
+          instance-role-arn: ${{ secrets.AWS_INSTANCE_ROLE_ARN }}
           copy-env-vars: |
             SERVER_PORT
           copy-secret-env-vars: |
